@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@jspsych/plugin-html-keyboard-response": "^1.1.2",
+    "@jspsych/plugin-instructions": "^1.1.2",
+    "@tailwindcss/typography": "^0.5.9",
     "jquery": "^3.6.3",
     "jspsych": "^7.3.1",
     "nanoid": "^4.0.0"
