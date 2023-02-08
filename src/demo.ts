@@ -3,16 +3,16 @@ import { nanoid } from "nanoid";
 import { JsPsychPlugin, ParameterType, TrialType, JsPsych } from "jspsych";
 
 const info = {
-  name: "trial",
+  name: "demo",
   parameters: {
     families: {
       type: ParameterType.OBJECT,
       default: [],
     },
     duration: {
-        type: ParameterType.INT,
-        default: 30
-    }
+      type: ParameterType.INT,
+      default: 30,
+    },
   },
 };
 
@@ -41,7 +41,7 @@ class DemoPlugin implements JsPsychPlugin<Info> {
     this.families = families;
     this.rootEl = display_element;
     const duration = trial.duration;
-    $(display_element).append(`<div class="text-center flex flex-col gap-2">
+    $(display_element).html(`<div class="text-center flex flex-col gap-2">
       <h3 class="text-2xl">Spend ${duration} seconds to learn the families and their respective objects.</h3>
       <div id="demo-${this.id}-timer" class="text-xl font-semibold"></div>
     </div>`);
@@ -72,15 +72,14 @@ class DemoPlugin implements JsPsychPlugin<Info> {
 
   finishTrial() {
     let data = {
-        families: this.families
-    }
-    this.rootEl.innerHTML = ''
-    this.jsPsych.finishTrial(data)
-
+      families: this.families,
+    };
+    this.rootEl.innerHTML = "";
+    this.jsPsych.finishTrial(data);
   }
 
   private renderFamily(el: HTMLElement, f: Family) {
-    $(el).addClass("flex justify-center py-6 px-4 flex-col gap-6");
+    $(el).addClass("flex pt-12 justify-center py-6 px-4 flex-col gap-6");
     $(el).html(
       `<h2 class="text-3xl font-medium tracking-wide text-center"><span class="font-bold">${f.name}</span> Family</h2>`
     );
