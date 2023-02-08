@@ -101,7 +101,7 @@ const evansImages = [1222, 2223, 3121].map((x) => `/images/fc1/fc1_${x}.gif`);
 
 const adamTrial = {
   type: DemoPlugin,
-  duration: 6,
+  duration: 60,
   families: [
     { name: "Adams", images: adamImages },
     { name: "Bennings", images: benningsImages },
@@ -121,7 +121,7 @@ const clarkTrial = {
       ],
     },
   ],
-  duration: 6,
+  duration: 60,
 };
 
 const davisTrial = {
@@ -137,12 +137,12 @@ const davisTrial = {
       ],
     },
   ],
-  duration: 6,
+  duration: 60,
 };
 
 const evansTrial = {
   type: DemoPlugin,
-  duration: 6,
+  duration: 60,
   families: [
     {
       name: "Evans",
@@ -168,7 +168,7 @@ const demoQuestions = {
       ],
     },
   ],
-  duration: 3,
+  duration: 30,
 };
 
 const cubeQuestions = {
