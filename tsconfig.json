@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     // ignore if type declaration is not available
+    // declare jatos as a global
+    "types": ["node", "jatos"],
     "skipLibCheck": true,
     "target": "ESNext",
     "useDefineForClassFields": true,

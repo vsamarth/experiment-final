@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { nanoid } from "nanoid";
 import { JsPsychPlugin, ParameterType, TrialType, JsPsych } from "jspsych";
+import randomInteger from 'random-int';
 
 const info = {
   name: "demo",
@@ -30,10 +31,43 @@ class DemoPlugin implements JsPsychPlugin<Info> {
   private static counter = 0;
   private families: Family[] = [];
   private rootEl: HTMLElement;
+  private visible = false;
+  private keepSubtracting = true;
+
+  // Show a triangle after a random delay
+  private delay: number;
 
   constructor(jsPsych: JsPsych) {
     this.jsPsych = jsPsych;
     this.id = nanoid();
+  }
+
+  showTriangle() {
+    this.visible = true;
+    $("img").prop("src", "/images/attention_triangle.png");
+    let counter = 0;
+    let x = setTimeout(() => {
+      if(this.visible) {
+        this.keepSubtracting = false;
+        alert("Press the button quickly when the triangle is visible.");
+      }
+    }, 1000);
+
+    $("#att").on("click", () => {
+      if (!this.visible) {
+        alert("Press this once only when the triangle is visible.");
+        return;
+      }
+      clearInterval(x);
+      let counter = 0;
+      this.keepSubtracting = true;
+      this.families.forEach((f) => {
+        const id = `demo-${this.id}-${counter}`;
+        counter++;
+        // $(this.rootEl).append($("<div />").attr("id", id));
+        this.renderFamily(document.getElementById(id), f);
+      });
+    });
   }
 
   trial(display_element: HTMLElement, trial: TrialType<Info>) {
@@ -41,6 +75,18 @@ class DemoPlugin implements JsPsychPlugin<Info> {
     this.families = families;
     this.rootEl = display_element;
     const duration = trial.duration;
+
+    this.delay = randomInteger(1, duration - 2);
+
+    // Start a timer for every second
+    const x = setInterval(() => {
+      this.delay--;
+      if (this.delay <= 0) {
+        clearInterval(x);
+        this.showTriangle();
+      }
+    }, 1000);
+
     $(display_element).html(`<div class="text-center flex flex-col gap-2">
       <h3 class="text-2xl">Spend ${duration} seconds to learn the families and their respective objects.</h3>
       <div id="demo-${this.id}-timer" class="text-xl font-semibold"></div>
@@ -48,11 +94,19 @@ class DemoPlugin implements JsPsychPlugin<Info> {
 
     this.showTimer(document.getElementById(`demo-${this.id}-timer`), duration);
 
-    families.forEach((f) => {
-      const id = `demo-${this.id}-${DemoPlugin.counter++}`;
+    // Loop from 0 to 1
+
+    families.forEach((f, idx) => {
+      const id = `demo-${this.id}-${idx}`;
       $(display_element).append($("<div />").attr("id", id));
       this.renderFamily(document.getElementById(id), f);
     });
+
+    $(this.rootEl).append(
+      `<div class="flex items-center justify-center mt-8 "><button id="att" class="bg-blue-500 rounded-lg text-white h-11 w-fit px-4">Press this when you see the triangle </button></div>`
+    );
+
+    
   }
 
   showTimer(el: HTMLElement, duration: number) {
@@ -60,7 +114,7 @@ class DemoPlugin implements JsPsychPlugin<Info> {
     $(el).html(`Time Left: ${timeLeft} seconds`);
 
     const x = setInterval(() => {
-      --timeLeft;
+      if(this.keepSubtracting) --timeLeft;
       $(el).html(`Time Left: ${timeLeft} seconds`);
 
       if (timeLeft <= 0) {

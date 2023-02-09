@@ -5,9 +5,10 @@ import DemoPlugin from "./demo";
 import QuestionsPlugin from "./questions";
 import { phase1, phase2, phase3, phase4 } from "./data";
 import jsPsychInstructions from "@jspsych/plugin-instructions";
+import jsPsychPreload from "@jspsych/plugin-preload";
 import "./main.css";
 
-// import 'jsp'
+const serverUrl = "https://novelobjects.sgp1.cdn.digitaloceanspaces.com";
 
 const jsPsych = initJsPsych({
   display_element: document.getElementById("app"),
@@ -93,7 +94,7 @@ const finalInstructions = {
 
 const adamImages = [1231, 1322, 2333].map((x) => `/images/fa1/fa1_${x}.gif`);
 const benningsImages = [1213, 2133, 2321].map(
-  (x) => `/images/fa2/fa2_${x}.gif`
+  (x) => `${serverUrl}/images/fa2/fa2_${x}.gif`
 );
 const clarkImages = [1222, 1322, 2212].map((x) => `/images/fb1/fb1_${x}.gif`);
 const davisImages = [1111, 1113, 1321].map((x) => `/images/fb3/fb3_${x}.gif`);
@@ -118,7 +119,7 @@ const clarkTrial = {
         "/images/fa2_2321_to_fb1_3321.gif",
         "/images/fa1_3123_to_fb1_3122.gif",
         "/images/fa2_2321_to_fb1_2212.gif",
-      ],
+      ].map((x) => `${serverUrl}${x}`),
     },
   ],
   duration: 60,
@@ -131,10 +132,10 @@ const davisTrial = {
       name: "Davis",
       images: [
         ...davisImages,
-        "/images/fa1_3212_to_fb3_1111.gif",
-        "/images/fa2_1213_to_fb3_3213.gif",
-        "/images/fb1_2212_to_fb3_2112.gif",
-      ],
+        `/images/fa1_3212_to_fb3_1111.gif`,
+        `/images/fa2_1213_to_fb3_3213.gif`,
+        `/images/fb1_2212_to_fb3_2112.gif`,
+      ].map((x) => `${serverUrl}${x}`),
     },
   ],
   duration: 60,
@@ -151,7 +152,7 @@ const evansTrial = {
         "/images/fa2_3111_to_fc1_1222.gif",
         "/images/fa2_1213_to_fc1_3321.gif",
         "/images/fb3_1111_to_fc1_3313.gif",
-      ],
+      ].map((x) => `${serverUrl}${x}`),
     },
   ],
 };
@@ -165,10 +166,10 @@ const demoQuestions = {
         "/images/demo/cube1.gif",
         "/images/demo/cube2.gif",
         "/images/demo/cube3.gif",
-      ],
+      ].map((x) => `${serverUrl}${x}`),
     },
   ],
-  duration: 30,
+  duration: 10,
 };
 
 const cubeQuestions = {
@@ -197,8 +198,26 @@ const thanksInstructions = {
   show_clickable_nav: true,
 };
 
+const preload1 = {
+  type: jsPsychPreload,
+  images: [
+    ...demoQuestions.families[0].images,
+    ...adamImages,
+    ...benningsImages,
+    ...phase1.map((x) => x.question.image),
+    ...clarkTrial.families[0].images,
+    ...phase2.map((x) => x.question.image),
+
+    ...davisTrial.families[0].images,
+    ...phase3.map((x) => x.question.image),
+    ...evansTrial.families[0].images,
+    ...phase4.map((x) => x.question.image),
+  ],
+};
+
 let timeline = [
   instructions,
+  preload1,
   demoQuestions,
   cubeQuestions,
   finalInstructions,

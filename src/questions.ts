@@ -50,19 +50,22 @@ class QuestionsPlugin implements JsPsychPlugin<Info> {
           ${this.choices
             .map((choice, index) => {
               return `<label class="flex items-center">
-              <input type="radio" name="choice" value="${index}" />
+              <input type="radio" name="choice" value="${index}" disabled />
               <span class="ml-2">${choice}</span>
             </label>`;
             })
             .join("")}
           </div>
-          <button class="bg-blue-500 text-white py-2 px-4 rounded-md w-fit" type="submit">Submit</button>
+          <button id="submit" disabled class="bg-blue-500 text-white py-2 px-4 rounded-md w-fit disabled:bg-blue-200" type="submit">Submit</button>
         </form>
       </div>`
     );
 
     $("#banner button").on("click", () => {
       $("#banner").html(`<img src="${this.question.image}" />`);
+      $('#submit').prop('disabled', false);
+
+      $('input[name="choice"]').prop('disabled', false);
     });
 
     $("#form").on("submit", (e) => {
