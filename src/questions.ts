@@ -1,5 +1,4 @@
 import $ from "jquery";
-import { nanoid } from "nanoid";
 import { JsPsychPlugin, ParameterType, TrialType, JsPsych } from "jspsych";
 
 const info = {
@@ -63,9 +62,9 @@ class QuestionsPlugin implements JsPsychPlugin<Info> {
 
     $("#banner button").on("click", () => {
       $("#banner").html(`<img src="${this.question.image}" />`);
-      $('#submit').prop('disabled', false);
+      $("#submit").prop("disabled", false);
 
-      $('input[name="choice"]').prop('disabled', false);
+      $('input[name="choice"]').prop("disabled", false);
     });
 
     $("#form").on("submit", (e) => {
@@ -74,6 +73,12 @@ class QuestionsPlugin implements JsPsychPlugin<Info> {
       if (choice === undefined) {
         alert("Please select an answer");
         return;
+      }
+      if (this.choices[0] == 'Cube') {
+        if (choice != 0) {
+          alert("Wrong answer! Please try again.");
+          return;
+        }
       }
       const data = {
         kind: "demo",

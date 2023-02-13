@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { nanoid } from "nanoid";
 import { JsPsychPlugin, ParameterType, TrialType, JsPsych } from "jspsych";
-import randomInteger from 'random-int';
+import randomInteger from "random-int";
 
 const info = {
   name: "demo",
@@ -47,7 +47,7 @@ class DemoPlugin implements JsPsychPlugin<Info> {
     $("img").prop("src", "/images/attention_triangle.png");
     let counter = 0;
     let x = setTimeout(() => {
-      if(this.visible) {
+      if (this.visible) {
         this.keepSubtracting = false;
         alert("Press the button quickly when the triangle is visible.");
       }
@@ -105,8 +105,6 @@ class DemoPlugin implements JsPsychPlugin<Info> {
     $(this.rootEl).append(
       `<div class="flex items-center justify-center mt-8 "><button id="att" class="bg-blue-500 rounded-lg text-white h-11 w-fit px-4">Press this when you see the triangle </button></div>`
     );
-
-    
   }
 
   showTimer(el: HTMLElement, duration: number) {
@@ -114,7 +112,7 @@ class DemoPlugin implements JsPsychPlugin<Info> {
     $(el).html(`Time Left: ${timeLeft} seconds`);
 
     const x = setInterval(() => {
-      if(this.keepSubtracting) --timeLeft;
+      if (this.keepSubtracting) --timeLeft;
       $(el).html(`Time Left: ${timeLeft} seconds`);
 
       if (timeLeft <= 0) {

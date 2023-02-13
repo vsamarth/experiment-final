@@ -7,6 +7,7 @@ import { phase1, phase2, phase3, phase4 } from "./data";
 import jsPsychInstructions from "@jspsych/plugin-instructions";
 import jsPsychPreload from "@jspsych/plugin-preload";
 import "./main.css";
+import { finalInstructions } from "./instructions";
 
 const serverUrl = "https://novelobjects.sgp1.cdn.digitaloceanspaces.com";
 
@@ -35,9 +36,12 @@ const instructions = {
     <p>In the training part of the first phase, you will be introduced to two new family of objects.
     During the training part of the remaining phases, you will be introduced to one new family of objects.
     </p>
-    <p>You will be given 60 seconds to learn the features of the families in the given phase. The
+    <p>You will be given 60 seconds to learn the features of the families in every phase. The
     objects will be continuously rotating and you have to do your best to learn the features of these
     objects.</p>
+
+    <p>A yellow triangle will be flashed once during training and you are required to click on
+     the button below the training gifs only when you see the shape appear. </p>
 
     <p>Once time is up, you will immediately move to the testing part of the phase.</p>
     <p class="font-bold">Press <kbd>Next</kbd> to move to the next page.</p>
@@ -68,22 +72,8 @@ const instructions = {
   key_forward: "Enter",
   show_clickable_nav: true,
 };
-const finalInstructions = {
-  type: jsPsychInstructions,
-  pages: [
-    `<div class="prose-lg">
-    <h1>Instructions</h1>
-    <p>
-    That's it for the demo. Press <kbd>Next</kbd> to move to the actual experiment.
-    </p>
-    </div>   
-    `,
-  ],
-  allow_backward: false,
-  key_forward: "Enter",
-  show_clickable_nav: true,
-};
 
+ 
 /*
         fa1: "Addams",
         fa2: "Bennings",
@@ -122,7 +112,7 @@ const clarkTrial = {
       ].map((x) => `${serverUrl}${x}`),
     },
   ],
-  duration: 60,
+  duration: 30,
 };
 
 const davisTrial = {
@@ -138,12 +128,12 @@ const davisTrial = {
       ].map((x) => `${serverUrl}${x}`),
     },
   ],
-  duration: 60,
+  duration: 30,
 };
 
 const evansTrial = {
   type: DemoPlugin,
-  duration: 60,
+  duration: 30,
   families: [
     {
       name: "Evans",
