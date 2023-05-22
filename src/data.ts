@@ -1,6 +1,6 @@
 import QuestionsPlugin, { Question } from "./questions";
 
-const server_url = `/output`;
+const server_url = `https://novelobjects.sgp1.digitaloceanspaces.com/output`;
 
 const filters = [
   "gaussian_noise",
@@ -30,7 +30,9 @@ for (let i = 0; i < filters.length; i++) {
 }
 
 const opt1 = [10, 8, 8, 7, 15, 14, 12, 11, 15, 5, 10, 0, 9, 4, 6, 12, 14, 7, 18, 16];
-
+const opt2 = [6, 3, 12, 6, 15, 9, 6, 15, 7, 8, 2, 14, 10, 2, 17, 3, 18, 9, 7, 9, 14, 1, 10, 14, 2, 6, 18, 1, 15, 11]
+const opt3 = [8, 4, 2, 11, 13, 6, 12, 14, 5, 14, 1, 15, 11, 18, 5, 0, 6, 5, 5, 18, 4, 7, 2, 3, 0, 2, 6, 16, 16, 2, 14, 10, 7, 14, 15, 15, 1, 1, 2, 6]
+const opt4 = [4, 3, 18, 6, 11, 0, 15, 11, 3, 17, 12, 12, 4, 4, 7, 10, 15, 4, 16, 1, 14, 18, 6, 8, 9, 2, 2, 18, 6, 9, 3, 14, 16, 14, 18, 4, 16, 5, 8, 3, 17, 10, 10, 15, 10, 17, 10, 6, 3, 12];
 console.log(options);
 
 export const phase1 = [
@@ -102,10 +104,12 @@ export const phase2 = [
   "novel_gif_36ax36b/fb1/fb1_1222_a260_b350",
   "novel_gif_36ax36b/fa1/fa1_3123_a230_b210",
 ].map((image, index) => {
+  const folder = options[opt2[index]];
+  image = image.replace(/\//g, "-");
   return {
     type: QuestionsPlugin,
     question: {
-      image: `${server_url}${image}.gif`,
+      image: `${server_url}/${folder}/${image}.gif`,
       choices: ["Adams", "Bennings", "Clark"],
       // answerIndex: isFa1 ? 0 : 1,
     },
@@ -155,10 +159,12 @@ export const phase3 = [
   "novel_gif_36ax36b/fb3/fb3_1321_a50_b170",
   "novel_gif_36ax36b/fa1/fa1_3123_a50_b170",
 ].map((image, index) => {
+  const folder = options[opt3[index]];
+  image = image.replace(/\//g, "-");
   return {
     type: QuestionsPlugin,
     question: {
-      image: `${server_url}${image}.gif`,
+      image: `${server_url}/${folder}/${image}.gif`,
       choices: ["Adams", "Bennings", "Clark", "Davis"],
     },
     phase: 3,
@@ -217,10 +223,12 @@ export const phase4 = [
   "novel_gif_36ax36b/fb1/fb1_1322_a20_b80",
   "novel_gif_36ax36b/fa1/fa1_3123_a60_b130",
 ].map((image, index) => {
+  const folder = options[opt4[index]];
+  image = image.replace(/\//g, "-");
   return {
     type: QuestionsPlugin,
     question: {
-      image: `${server_url}${image}.gif`,
+      image: `${server_url}/${folder}/${image}.gif`,
       choices: ["Adams", "Bennings", "Clark", "Davis", "Evans"],
     },
     phase: 4,

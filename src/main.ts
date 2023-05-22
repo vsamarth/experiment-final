@@ -9,7 +9,7 @@ import jsPsychPreload from "@jspsych/plugin-preload";
 import "./main.css";
 import { finalInstructions } from "./instructions";
 
-const serverUrl = "";
+const serverUrl = "https://novelobjects.sgp1.digitaloceanspaces.com";
 
 const jsPsych = initJsPsych({
   display_element: document.getElementById("app"),
@@ -94,7 +94,7 @@ const adamTrial = {
   type: DemoPlugin,
   duration: 6,
   families: [
-    { name: "Adams", images: adamImages },
+    { name: "Adams", images: adamImages.map((x) => `${serverUrl}${x}`) },
     { name: "Bennings", images: benningsImages },
   ],
 };
@@ -201,13 +201,13 @@ const preload1 = {
     ...davisTrial.families[0].images,
     ...phase3.map((x) => x.question.image),
     ...evansTrial.families[0].images,
-    ...phase4.map((x) => x.question.image),
+    // ...phase4.map((x) => x.question.image),
   ],
 };
 
 let timeline = [
   instructions,
-  // preload1,
+  preload1,
   demoQuestions,
   cubeQuestions,
   finalInstructions,
