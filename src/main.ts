@@ -206,11 +206,11 @@ const preload1 = {
 };
 
 let timeline = [
-  // instructions,
+  instructions,
   // preload1,
-  // demoQuestions,
-  // cubeQuestions,
-  // finalInstructions,
+  demoQuestions,
+  cubeQuestions,
+  finalInstructions,
   adamTrial,
   ...phase1,
   clarkTrial,
