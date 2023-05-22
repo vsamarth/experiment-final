@@ -1,6 +1,37 @@
 import QuestionsPlugin, { Question } from "./questions";
 
-const server_url = `https://humancurriculum.s3.amazonaws.com/`;
+const server_url = `/output`;
+
+const filters = [
+  "gaussian_noise",
+  "shot_noise",
+  "impulse_noise",
+  "defocus_blur",
+  "glass_blur",
+  // # # "motion_blur",
+  // # # "zoom_blur",
+  // # "snow",
+  // # "frost",
+  // # "fog",
+  "brightness",
+  "contrast",
+  "elastic_transform",
+  // "pixelate",
+  "jpeg_compression",
+];
+
+
+// do product of filters and levels
+let options = ['original'];
+
+for (let i = 0; i < filters.length; i++) {
+  options.push(`${filters[i]}/1`);
+  options.push(`${filters[i]}/${filters[i] == 'contrast' ? 4 : 5}`);
+}
+
+const opt1 = [10, 8, 8, 7, 15, 14, 12, 11, 15, 5, 10, 0, 9, 4, 6, 12, 14, 7, 18, 16];
+
+console.log(options);
 
 export const phase1 = [
   "novel_gif_36ax36b/fa1/fa1_3123_a150_b160",
@@ -25,10 +56,13 @@ export const phase1 = [
   "novel_gif_36ax36b/fa2/fa2_3111_a110_b170",
 ].map((image, index) => {
   const isFa1 = image.includes("fa1");
+  // replace / with - to make it a valid filename
+  const folder = options[opt1[index]];
+  image = image.replace(/\//g, "-");
   return {
     type: QuestionsPlugin,
     question: {
-      image: `${server_url}${image}.gif`,
+      image: `${server_url}/${folder}/${image}.gif`,
       choices: ["Adams", "Bennings"],
       answerIndex: isFa1 ? 0 : 1,
     },

@@ -9,12 +9,12 @@ import jsPsychPreload from "@jspsych/plugin-preload";
 import "./main.css";
 import { finalInstructions } from "./instructions";
 
-const serverUrl = "https://novelobjects.sgp1.cdn.digitaloceanspaces.com";
+const serverUrl = "";
 
 const jsPsych = initJsPsych({
   display_element: document.getElementById("app"),
   on_finish: () => {
-    jatos.endStudy(jsPsych.data.get().json());
+    // jatos.endStudy(jsPsych.data.get().json());
   },
 });
 
@@ -92,7 +92,7 @@ const evansImages = [1222, 2223, 3121].map((x) => `/images/fc1/fc1_${x}.gif`);
 
 const adamTrial = {
   type: DemoPlugin,
-  duration: 60,
+  duration: 6,
   families: [
     { name: "Adams", images: adamImages },
     { name: "Bennings", images: benningsImages },
@@ -206,11 +206,11 @@ const preload1 = {
 };
 
 let timeline = [
-  instructions,
-  preload1,
-  demoQuestions,
-  cubeQuestions,
-  finalInstructions,
+  // instructions,
+  // preload1,
+  // demoQuestions,
+  // cubeQuestions,
+  // finalInstructions,
   adamTrial,
   ...phase1,
   clarkTrial,
