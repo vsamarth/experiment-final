@@ -92,7 +92,7 @@ const evansImages = [1222, 2223, 3121].map((x) => `/images/fc1/fc1_${x}.gif`);
 
 const adamTrial = {
   type: DemoPlugin,
-  duration: 6,
+  duration: 60,
   families: [
     { name: "Adams", images: adamImages.map((x) => `${serverUrl}${x}`) },
     { name: "Bennings", images: benningsImages },
