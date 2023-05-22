@@ -16,7 +16,7 @@ const jsPsych = initJsPsych({
   on_finish: () => {
     // jatos.endStudy(jsPsych.data.get().json());
   },
-});
+}); 
 
 const instructions = {
   type: jsPsychInstructions,
