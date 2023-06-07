@@ -2,6 +2,7 @@ import $ from "jquery";
 import { nanoid } from "nanoid";
 import { JsPsychPlugin, ParameterType, TrialType, JsPsych } from "jspsych";
 import randomInteger from "random-int";
+import { serverUrl } from "./main";
 
 const info = {
   name: "demo",
@@ -44,7 +45,7 @@ class DemoPlugin implements JsPsychPlugin<Info> {
 
   showTriangle() {
     this.visible = true;
-    $("img").prop("src", "/images/attention_triangle.png");
+    $("img").prop("src", `${serverUrl}/images/attention_triangle.png`);
     let counter = 0;
     let x = setTimeout(() => {
       if (this.visible) {

@@ -9,14 +9,15 @@ import jsPsychPreload from "@jspsych/plugin-preload";
 import "./main.css";
 import { finalInstructions } from "./instructions";
 
-const serverUrl = "https://novelobjects.sgp1.digitaloceanspaces.com";
+export const serverUrl = "https://novelobjects.sgp1.digitaloceanspaces.com";
+
 
 const jsPsych = initJsPsych({
   display_element: document.getElementById("app"),
   on_finish: () => {
     // jatos.endStudy(jsPsych.data.get().json());
   },
-}); 
+});
 
 const instructions = {
   type: jsPsychInstructions,
@@ -73,7 +74,7 @@ const instructions = {
   show_clickable_nav: true,
 };
 
- 
+
 /*
         fa1: "Addams",
         fa2: "Bennings",
@@ -82,19 +83,19 @@ const instructions = {
         fc1: "Evans",
 */
 
-const adamImages = [1231, 1322, 2333].map((x) => `/images/fa1/fa1_${x}.gif`);
+const adamImages = [1231, 1322, 2333].map((x) => `${serverUrl}/images/fa1/fa1_${x}.gif`);
 const benningsImages = [1213, 2133, 2321].map(
   (x) => `${serverUrl}/images/fa2/fa2_${x}.gif`
 );
-const clarkImages = [1222, 1322, 2212].map((x) => `/images/fb1/fb1_${x}.gif`);
-const davisImages = [1111, 1113, 1321].map((x) => `/images/fb3/fb3_${x}.gif`);
-const evansImages = [1222, 2223, 3121].map((x) => `/images/fc1/fc1_${x}.gif`);
+const clarkImages = [1222, 1322, 2212].map((x) => `${serverUrl}/images/fb1/fb1_${x}.gif`);
+const davisImages = [1111, 1113, 1321].map((x) => `${serverUrl}/images/fb3/fb3_${x}.gif`);
+const evansImages = [1222, 2223, 3121].map((x) => `${serverUrl}/images/fc1/fc1_${x}.gif`);
 
 const adamTrial = {
   type: DemoPlugin,
   duration: 60,
   families: [
-    { name: "Adams", images: adamImages.map((x) => `${serverUrl}${x}`) },
+    { name: "Adams", images: adamImages },
     { name: "Bennings", images: benningsImages },
   ],
 };
@@ -106,10 +107,10 @@ const clarkTrial = {
       name: "Clark",
       images: [
         ...clarkImages,
-        "/images/fa2_2321_to_fb1_3321.gif",
-        "/images/fa1_3123_to_fb1_3122.gif",
-        "/images/fa2_2321_to_fb1_2212.gif",
-      ].map((x) => `${serverUrl}${x}`),
+        `${serverUrl}/images/fa2_2321_to_fb1_3321.gif`,
+        `${serverUrl}/images/fa1_3123_to_fb1_3122.gif`,
+        `${serverUrl}/images/fa2_2321_to_fb1_2212.gif`,
+      ],
     },
   ],
   duration: 30,
@@ -122,10 +123,10 @@ const davisTrial = {
       name: "Davis",
       images: [
         ...davisImages,
-        `/images/fa1_3212_to_fb3_1111.gif`,
-        `/images/fa2_1213_to_fb3_3213.gif`,
-        `/images/fb1_2212_to_fb3_2112.gif`,
-      ].map((x) => `${serverUrl}${x}`),
+        `${serverUrl}/images/fa1_3212_to_fb3_1111.gif`,
+        `${serverUrl}/images/fa2_1213_to_fb3_3213.gif`,
+        `${serverUrl}/images/fb1_2212_to_fb3_2112.gif`,
+      ],
     },
   ],
   duration: 30,
@@ -139,10 +140,10 @@ const evansTrial = {
       name: "Evans",
       images: [
         ...evansImages,
-        "/images/fa2_3111_to_fc1_1222.gif",
-        "/images/fa2_1213_to_fc1_3321.gif",
-        "/images/fb3_1111_to_fc1_3313.gif",
-      ].map((x) => `${serverUrl}${x}`),
+        `${serverUrl}/images/fa2_3111_to_fc1_1222.gif`,
+        `${serverUrl}/images/fa2_1213_to_fc1_3321.gif`,
+        `${serverUrl}/images/fb3_1111_to_fc1_3313.gif`,
+      ],
     },
   ],
 };
@@ -166,7 +167,7 @@ const cubeQuestions = {
   type: QuestionsPlugin,
   phase: 0,
   question: {
-    image: "/images/demo/cube2_a60_b300.gif",
+    image: `${serverUrl}/images/demo/cube2_a60_b300.gif`,
     choices: ["Cube", "Sphere", "Cylinder"],
     answerIdx: 0,
   },
