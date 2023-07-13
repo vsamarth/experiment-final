@@ -34,6 +34,7 @@ class DemoPlugin implements JsPsychPlugin<Info> {
   private rootEl: HTMLElement;
   private visible = false;
   private keepSubtracting = true;
+  private startTime = performance.now();
 
   // Show a triangle after a random delay
   private delay: number;
@@ -125,7 +126,10 @@ class DemoPlugin implements JsPsychPlugin<Info> {
 
   finishTrial() {
     let data = {
+      kind: "demo",
       families: this.families,
+      startTime: this.startTime,
+      endTime: performance.now(),
     };
     this.rootEl.innerHTML = "";
     this.jsPsych.finishTrial(data);

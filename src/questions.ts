@@ -18,7 +18,8 @@ type Info = typeof info;
 export type Question = {
   image: string;
   choices: string[];
-  answerIndex?: number;
+  answerIndex: number;
+  isAttentionCheck: boolean
 };
 
 class QuestionsPlugin implements JsPsychPlugin<Info> {
@@ -27,11 +28,16 @@ class QuestionsPlugin implements JsPsychPlugin<Info> {
   private rootEl: HTMLElement;
   private question: Question;
   private choices: string[];
+  private startTime: number;
+  private endTime: number;
+  private clickTime: number;
   constructor(private jsPsych: JsPsych) {}
 
   trial(display_element: HTMLElement, trial: TrialType<Info>) {
     this.phase = trial.phase;
     this.rootEl = display_element;
+
+    this.startTime = performance.now();
 
     $(this.rootEl).html(
       `<div class="text-center"><h2 class="text-3xl font-medium tracking-wide">Phase ${this.phase}: Which family does the object belong to?</h2></div>`
@@ -61,6 +67,7 @@ class QuestionsPlugin implements JsPsychPlugin<Info> {
     );
 
     $("#banner button").on("click", () => {
+      this.clickTime = performance.now();
       $("#banner").html(`<img src="${this.question.image}" />`);
       $("#submit").prop("disabled", false);
 
@@ -74,26 +81,24 @@ class QuestionsPlugin implements JsPsychPlugin<Info> {
         alert("Please select an answer");
         return;
       }
-      if (this.choices[0] == 'Cube') {
+      if (this.question.isAttentionCheck) {
         if (choice != 0) {
           alert("Wrong answer! Please try again.");
           return;
         }
       }
+      this.endTime = performance.now();
       const data = {
-        kind: "demo",
+        kind: "question",
         phase: this.phase,
         question: this.question,
         answer: choice,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        clickTime: this.clickTime,
       };
-      // alert(JSON.stringify(data, null, 2));
       this.jsPsych.finishTrial(data);
     });
-  }
-
-  private finishTrial() {
-    this.jsPsych.finishTrial();
-    $(this.rootEl).html("");
   }
 }
 

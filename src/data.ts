@@ -64,7 +64,7 @@ export const phase1 = [
   return {
     type: QuestionsPlugin,
     question: {
-      image: `${server_url}/${folder}/${image}.gif`,
+      image: `${server_url}/original/${image}.gif`,
       choices: ["Adams", "Bennings"],
       answerIndex: isFa1 ? 0 : 1,
     },
@@ -109,7 +109,7 @@ export const phase2 = [
   return {
     type: QuestionsPlugin,
     question: {
-      image: `${server_url}/${folder}/${image}.gif`,
+      image: `${server_url}/original/${image}.gif`,
       choices: ["Adams", "Bennings", "Clark"],
       // answerIndex: isFa1 ? 0 : 1,
     },
@@ -164,7 +164,7 @@ export const phase3 = [
   return {
     type: QuestionsPlugin,
     question: {
-      image: `${server_url}/${folder}/${image}.gif`,
+      image: `${server_url}/original/${image}.gif`,
       choices: ["Adams", "Bennings", "Clark", "Davis"],
     },
     phase: 3,
@@ -228,7 +228,7 @@ export const phase4 = [
   return {
     type: QuestionsPlugin,
     question: {
-      image: `${server_url}/${folder}/${image}.gif`,
+      image: `${server_url}/original/${image}.gif`,
       choices: ["Adams", "Bennings", "Clark", "Davis", "Evans"],
     },
     phase: 4,
