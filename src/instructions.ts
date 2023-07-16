@@ -31,7 +31,7 @@ export const instructions = {
     <p>In the training part of the first phase, you will be introduced to two new family of objects.
     During the training part of the remaining phases, you will be introduced to one new family of objects.
     </p>
-    <p>You will be given 60 seconds to learn the features of the families in the first phase, followed by 30 seconds in
+    <p>You will be given 30 seconds to learn the features of the families in the first phase, followed by 15 seconds in
     the subsequent phases. The
     objects will be continuously rotating and you have to do your best to learn the features of these
     objects.</p>

@@ -94,12 +94,12 @@ async function runExpriment(set: number): Promise<any[]> {
   const trials = [
     {
       type: UnsupervisedDemoPlugin,
-      duration: 100,
+      duration: 75,
       images: _.shuffle(_.flatten(data.unsupervised_list)),
     },
     {
       type: DemoPlugin,
-      duration: 10,
+      duration: 30,
       families: [
         { name: "Adams", images: data.train_list[0] },
         { name: "Bennings", images: data.train_list[1] },
@@ -107,18 +107,18 @@ async function runExpriment(set: number): Promise<any[]> {
     },
     {
       type: DemoPlugin,
-      duration: 10,
+      duration: 15,
       families: [{ name: "Clark", images: data.train_list[2] }],
     },
     {
       type: DemoPlugin,
-      duration: 10,
+      duration: 15,
       families: [{ name: "Davis", images: data.train_list[3] }],
     },
 
     {
       type: DemoPlugin,
-      duration: 10,
+      duration: 15,
       families: [{ name: "Evans", images: data.train_list[4] }],
     },
   ];
