@@ -88,6 +88,7 @@ class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
       }, 2000);
     }
 
+    // grid-cols-3 grid-cols-5
     $("#unsupervised-container").addClass(`p-12 grid grid-cols-${cols} gap-4`)
       .html(`
     ${this.images

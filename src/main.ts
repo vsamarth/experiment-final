@@ -135,13 +135,13 @@ async function runExpriment(set: number): Promise<any[]> {
   };
 
   let timeline = [
-    // instructions,
+    instructions,
     preload,
-    // unsupervisedDemo,
-    // nextTrainingInstructions,
-    // demoQuestions,
-    // cubeQuestions,
-    // finalInstructions,
+    unsupervisedDemo,
+    nextTrainingInstructions,
+    demoQuestions,
+    cubeQuestions,
+    finalInstructions,
     trials[0],
     nextExperimentInstructions,
     trials[1],
