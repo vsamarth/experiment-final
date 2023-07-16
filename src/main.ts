@@ -9,6 +9,8 @@ import "./main.css";
 import {
   finalInstructions,
   instructions,
+  nextExperimentInstructions,
+  nextTrainingInstructions,
   thanksInstructions,
 } from "./instructions";
 import { experimentData } from "./training-data";
@@ -37,6 +39,16 @@ const demoQuestions = {
     },
   ],
   duration: 10,
+};
+
+const unsupervisedDemo = {
+  type: UnsupervisedDemoPlugin,
+  images: [
+    "/images/demo/cube1.gif",
+    "/images/demo/cube2.gif",
+    "/images/demo/cube3.gif",
+  ].map((x) => `${serverUrl}${x}`),
+  duration: 15,
 };
 
 const cubeQuestions = {
@@ -82,7 +94,8 @@ async function runExpriment(set: number): Promise<any[]> {
   const trials = [
     {
       type: UnsupervisedDemoPlugin,
-      images: [...data.train_list[0],...data.train_list[1],...data.train_list[2],...data.train_list[3],...data.train_list[4]],
+      duration: 10,
+      images: _.shuffle(_.flatten(data.unsupervised_list)),
     },
     {
       type: DemoPlugin,
@@ -115,6 +128,7 @@ async function runExpriment(set: number): Promise<any[]> {
     images: [
       ...demoQuestions.families[0].images,
       cubeQuestions.question.image,
+      _.flatten(data.unsupervised_list),
       _.flatten(data.train_list),
       _.flatten(data.test_list),
     ],
@@ -122,24 +136,48 @@ async function runExpriment(set: number): Promise<any[]> {
 
   let timeline = [
     preload,
-    // demoQuestions,
-    // cubeQuestions,
-    // finalInstructions,
+    instructions,
+    unsupervisedDemo,
+    nextTrainingInstructions,
+    demoQuestions,
+    cubeQuestions,
+    finalInstructions,
     trials[0],
-    // ...getQuestions(data.test_list[0], 1, ["Adams", "Bennings"], data.curriculum),
+    nextExperimentInstructions,
     trials[1],
-    // ...getQuestions(data.test_list[1], 2, ["Adams", "Bennings", "Clark"], data.curriculum),
+    ...getQuestions(
+      data.test_list[0],
+      1,
+      ["Adams", "Bennings"],
+      data.curriculum
+    ),
+    ...getQuestions(
+      data.test_list[1],
+      2,
+      ["Adams", "Bennings", "Clark"],
+      data.curriculum
+    ),
     trials[2],
-    // ...getQuestions(data.test_list[2], 3, ["Adams", "Bennings", "Clark", "Davis"], data.curriculum),
+    ...getQuestions(
+      data.test_list[2],
+      3,
+      ["Adams", "Bennings", "Clark", "Davis"],
+      data.curriculum
+    ),
     trials[3],
-    // ...getQuestions(data.test_list[3], 4, ["Adams", "Bennings", "Clark", "Davis", "Evans"], data.curriculum),
+    ...getQuestions(
+      data.test_list[3],
+      4,
+      ["Adams", "Bennings", "Clark", "Davis", "Evans"],
+      data.curriculum
+    ),
     thanksInstructions,
   ];
 
   return timeline;
 }
 
-let set = 55;
+let set = 53;
 console.log(`Using curriculum set ${set}`);
 runExpriment(set).then((timeline) => {
   jsPsych.run(timeline);

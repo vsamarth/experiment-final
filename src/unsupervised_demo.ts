@@ -1,5 +1,4 @@
 import $ from "jquery";
-import { nanoid } from "nanoid";
 import { JsPsychPlugin, ParameterType, TrialType, JsPsych } from "jspsych";
 import randomInteger from "random-int";
 import { serverUrl } from "./main";
@@ -32,12 +31,13 @@ type Image = string;
 class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
   static info = info;
   private jsPsych: JsPsych;
-  private static counter = 0;
   private images: Image[] = [];
   private rootEl: HTMLElement;
-  private visible = false;
-  private keepSubtracting = true;
   private startTime = performance.now();
+  private triangleIdx: number;
+  private showTriangle = false;
+  private duration: number;
+  private keepSubtracting = true;
 
   // Show a triangle after a random delay
   private delay: number;
@@ -46,19 +46,73 @@ class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
     this.jsPsych = jsPsych;
   }
 
-  showTriangle() {}
-
   trial(display_element: HTMLElement, trial: TrialType<Info>) {
     this.rootEl = display_element;
     this.images = trial.images;
+    this.duration = trial.duration;
+    this.triangleIdx = randomInteger(0, this.images.length - 1);
+    this.delay = randomInteger(5, this.duration - 5);
 
-    shuffleArray(this.images);
 
-    console.log(trial);
 
-    $(this.rootEl).addClass('w-screen top-0 left-0 absolute p-12').html(`<div class="grid grid-cols-5 gap-4">
-      ${this.images.map((image) => `<img class="w-[480px]" src="${image}" />`).join("")}
-    </div>`);
+
+    $(this.rootEl).html(`
+    <div class="w-full absolute left-0 top-0">
+    <div class="text-center flex flex-col gap-2">
+    <h3 class="text-3xl my-4">Spend ${this.duration} seconds to view the objects.</h3>
+    <div id="unsupervised-timer" class="text-xl font-semibold mb-4"></div>
+    <div id="unsupervised-container"></div>
+  </div>
+  </div>`);
+
+    const timer = setInterval(() => {
+      this.delay--;
+      if (this.delay <= 0) {
+        clearInterval(timer);
+        this.showTriangle = true;
+        this.render();
+      }
+    }, 1000);
+    this.render();
+    this.showTimer(
+      document.getElementById("unsupervised-timer"),
+      this.duration
+    );
+  }
+
+  render() {
+    this.keepSubtracting = !this.showTriangle;
+    let removeableTimer: number;
+    const cols = this.images.length === 3 ? 3 : 5;
+
+    if (this.showTriangle) {
+      removeableTimer = setTimeout(() => {
+        alert("Click on the triangle as soon as you see it.");
+      }, 2000);
+    }
+
+    $("#unsupervised-container").addClass("w-screen p-12")
+      .html(`<div class="grid grid-cols-${cols} gap-4">
+    ${this.images
+      .map(
+        (image, idx) => `<div class="relative">
+    ${
+      this.showTriangle && idx === this.triangleIdx
+        ? `<img id="unsupervised-triangle" src="${serverUrl}/images/attention_triangle.png" class="absolute top-0 left-0 w-full h-full cursor-pointer">`
+        : `<img src="${image}" class="w-full h-full">`
+    }
+  </div>
+  `
+      )
+      .join("")}
+      
+</div>`);
+
+    $("#unsupervised-triangle").on("click", () => {
+      this.showTriangle = false;
+      clearTimeout(removeableTimer);
+      this.render();
+    });
   }
 
   showTimer(el: HTMLElement, duration: number) {
@@ -79,11 +133,9 @@ class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
   finishTrial() {
     let data = {
       kind: "unsupervised-demo",
-      families: this.families,
       startTime: this.startTime,
       endTime: performance.now(),
     };
-    this.rootEl.innerHTML = "";
     this.jsPsych.finishTrial(data);
   }
 }

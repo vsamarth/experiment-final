@@ -14,11 +14,25 @@ export const instructions = {
 
     The experiment has <b>4 phases</b>. Each phase consists of 2 parts: training and testing. 
 
+    <h3>Preview</h3>
+
+    <p>
+    In the preview phase, we show 15 objects (3 objects each from the 5 families) in a random order, for 75 seconds.
+    The objects will be continuously rotating and your task is to learn the general as well as discriminatitve features of the rotating objects.
+    </p>
+    <p>
+    A yellow triangle will be flashed once during the phase over one of the fifteen objects. 
+    You are supposed to click on the yellow triangle as fast as possible. 
+    </p>
+
+    <p>Once time is up, you'll move to the training part of the first phase.
+
     <h3>Training</h3>
     <p>In the training part of the first phase, you will be introduced to two new family of objects.
     During the training part of the remaining phases, you will be introduced to one new family of objects.
     </p>
-    <p>You will be given 60 seconds to learn the features of the families in every phase. The
+    <p>You will be given 60 seconds to learn the features of the families in the first phase, followed by 30 seconds in
+    the subsequent phases. The
     objects will be continuously rotating and you have to do your best to learn the features of these
     objects.</p>
 
@@ -46,7 +60,7 @@ export const instructions = {
 
     <p>You are to identify which family the object belongs to by choosing one of the options below the GIF. </p>
 
-    <p class="font-bold">Press <kbd>Next</kbd> to move to the demo of the experiment.</p>
+    <p class="font-bold">Press <kbd>Next</kbd> to start the demo.</p>
     </div>   
     `,
   ],
@@ -54,7 +68,6 @@ export const instructions = {
   key_forward: "Enter",
   show_clickable_nav: true,
 };
-
 
 export const thanksInstructions = {
   type: jsPsychInstructions,
@@ -80,6 +93,41 @@ export const finalInstructions = {
       <p>
       That's it for the demo. Press <kbd>Next</kbd> to move to the actual experiment.
       </p>
+      </div>   
+      `,
+  ],
+  allow_backward: false,
+  key_forward: "Enter",
+  show_clickable_nav: true,
+};
+
+export const nextTrainingInstructions = {
+  type: jsPsychInstructions,
+  pages: [
+    `<div class="prose-lg">
+      <h1>Instructions</h1>
+      <p>
+      That was the demo for the preview phase. Press <kbd>Next</kbd> to move to the demo for the training and
+      testing parts of a phase.
+      </p>
+      </div>   
+      `,
+  ],
+  allow_backward: false,
+  key_forward: "Enter",
+  show_clickable_nav: true,
+};
+
+export const nextExperimentInstructions = {
+  type: jsPsychInstructions,
+  pages: [
+    `<div class="prose-lg">
+      <h1>Instructions</h1>
+      <p>
+      That's the end of the preview phase. The training and testing parts 
+      of the four phases will start now.
+      </p>
+      <p>Press <kbd>Next</kbd> to continue.</p>
       </div>   
       `,
   ],
