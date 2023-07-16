@@ -53,9 +53,6 @@ class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
     this.triangleIdx = randomInteger(0, this.images.length - 1);
     this.delay = randomInteger(5, this.duration - 5);
 
-
-
-
     $(this.rootEl).html(`
     <div class="w-full absolute left-0 top-0">
     <div class="text-center flex flex-col gap-2">
@@ -91,17 +88,17 @@ class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
       }, 2000);
     }
 
-    $("#unsupervised-container").addClass("w-screen p-12")
-      .html(`<div class="grid grid-cols-${cols} gap-4">
+    $("#unsupervised-container").addClass(`p-12 grid grid-cols-${cols} gap-4`)
+      .html(`
     ${this.images
       .map(
         (image, idx) => `<div class="relative">
     ${
       this.showTriangle && idx === this.triangleIdx
         ? `<img id="unsupervised-triangle" src="${serverUrl}/images/attention_triangle.png" class="absolute top-0 left-0 w-full h-full cursor-pointer">`
-        : `<img src="${image}" class="w-full h-full">`
+        : `<img src="${image}" class="">`
     }
-  </div>
+    </div>
   `
       )
       .join("")}

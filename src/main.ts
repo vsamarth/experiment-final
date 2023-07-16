@@ -94,7 +94,7 @@ async function runExpriment(set: number): Promise<any[]> {
   const trials = [
     {
       type: UnsupervisedDemoPlugin,
-      duration: 10,
+      duration: 100,
       images: _.shuffle(_.flatten(data.unsupervised_list)),
     },
     {
@@ -135,13 +135,13 @@ async function runExpriment(set: number): Promise<any[]> {
   };
 
   let timeline = [
-    instructions,
+    // instructions,
     preload,
-    unsupervisedDemo,
-    nextTrainingInstructions,
-    demoQuestions,
-    cubeQuestions,
-    finalInstructions,
+    // unsupervisedDemo,
+    // nextTrainingInstructions,
+    // demoQuestions,
+    // cubeQuestions,
+    // finalInstructions,
     trials[0],
     nextExperimentInstructions,
     trials[1],
