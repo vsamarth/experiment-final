@@ -88,7 +88,7 @@ function getQuestions(
   return phase1;
 }
 
-async function runExpriment(set: number): Promise<any[]> {
+async function runExperiment(set: number): Promise<any[]> {
   const data = await experimentData(set);
 
   const trials = [
@@ -179,6 +179,6 @@ async function runExpriment(set: number): Promise<any[]> {
 
 let set = 53;
 console.log(`Using curriculum set ${set}`);
-runExpriment(set).then((timeline) => {
+runExperiment(set).then((timeline) => {
   jsPsych.run(timeline);
 });

@@ -58,6 +58,9 @@ class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
     <div class="text-center flex flex-col gap-2">
     <h3 class="text-3xl my-4">Spend ${this.duration} seconds to view the objects.</h3>
     <div id="unsupervised-timer" class="text-xl font-semibold mb-4"></div>
+    <div>
+      <button id="unsupervised-button" class="bg-blue-500 text-blue-50 h-10 px-4 appearance-none rounded-md">Press this when you see the triangles.</button>
+    </div>
     <div id="unsupervised-container"></div>
   </div>
   </div>`);
@@ -79,13 +82,19 @@ class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
 
   render() {
     this.keepSubtracting = !this.showTriangle;
-    let removeableTimer: number;
+    let removableTimer: number;
     const cols = this.images.length === 3 ? 3 : 5;
 
     if (this.showTriangle) {
-      removeableTimer = setTimeout(() => {
+      removableTimer = setTimeout(() => {
         alert("Click on the triangle as soon as you see it.");
       }, 2000);
+
+      $("#unsupervised-button").on("click", () => {
+        clearTimeout(removableTimer);
+        this.showTriangle = false;
+        this.render();
+      });
     }
 
     // grid-cols-3 grid-cols-5
@@ -93,11 +102,11 @@ class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
       .html(`
     ${this.images
       .map(
-        (image, idx) => `<div class="relative">
+        (image) => `<div class="relative">
     ${
-      this.showTriangle && idx === this.triangleIdx
-        ? `<img id="unsupervised-triangle" src="${serverUrl}/images/attention_triangle.png" class="absolute top-0 left-0 w-full h-full cursor-pointer">`
-        : `<img src="${image}" class="">`
+      this.showTriangle
+        ? `<img id="unsupervised-triangle" src="${serverUrl}/images/attention_triangle.png" class="cursor-pointer">`
+        : `<img src="${image}">`
     }
     </div>
   `
@@ -108,7 +117,7 @@ class UnsupervisedDemoPlugin implements JsPsychPlugin<Info> {
 
     $("#unsupervised-triangle").on("click", () => {
       this.showTriangle = false;
-      clearTimeout(removeableTimer);
+      clearTimeout(removableTimer);
       this.render();
     });
   }
